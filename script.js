@@ -107,7 +107,6 @@ function gameOver(){
     initialInput = document.createElement('input')
     initialInput.setAttribute('type', 'text')
     initialInput.id = 'initials'
-    // console.log(initialInput)
     questionEl.appendChild(initialInput)
     
     var submitBtn = document.createElement('input')
@@ -125,12 +124,10 @@ function appendPerson(){
         score: secondsLeft
     };
     localStorage.setItem("highscore", JSON.stringify(highScore));
-    //create list of initials
-    // var ol = document.createElement('ol')
+    //create list to store initials and score
     var li = document.createElement('li')
     li.className ="list"
     li.append(highScore.person) + li.append(" - ") + li.append(highScore.score)
-    // ol.appendChild(li)
     scoreEl.appendChild(li)
     console.log(li)
 }

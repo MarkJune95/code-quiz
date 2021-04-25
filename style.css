@@ -52,7 +52,11 @@ li{
     border-radius: 5px;
     color: white;
     cursor: pointer;
-    border-style: none;    
+    border-style: none;
+    margin-left: 25px;
+    padding: 5px;
+    
+    
 }
 
 .choice-btn:hover{

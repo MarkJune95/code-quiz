@@ -37,7 +37,7 @@ var questionEl = document.querySelector('.quiz-list');
 var scorePageEl = document.querySelector('.score-page')
 var scoreEl = document.querySelector('.score-list')
 var timerEl = document.querySelector('#time')
-var listBtnEl = document.querySelector('.score-page .list-btn')
+
 
 var questionCounter = 0;
 var initialInput;
@@ -192,10 +192,7 @@ scorePageEl.onclick = function(event){
         scoreEl.innerHTML = ''
         
     }
-    if(scoreEl.innerHTML == ""){
-        document.querySelector('#clear-btn').style.display = 'none'
-        document.querySelector('#back-btn').style.display = 'none'
-    }
+    
     
 }
 

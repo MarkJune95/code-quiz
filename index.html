@@ -9,21 +9,28 @@
 </head>
 <body>
     <header class="header">
-        <a href="#highscore" onclick="saveHighScore()">View Highscores</a>
-        <span id="time">Time left: 100</span>
+        <a id="show-last-score">View Highscores</a>
+        <p class="time">Time left: <span id="time"></span></p>
     </header>
     <main>
-        <div class="homepage-box">
-            <h1>Coding Quiz Challange</h1>
+        <div class="homepage" style='display: block;'>
+            <h3>Coding Quiz Challange</h3>
             <p>Trying answering the following questions within the given time. Time will be deducted if you answer is incorret.</p> 
             <button class="btn" id="start-btn">Start Quiz</button>
         </div>
 
         <!-- this is a <div> for quiz -->
-        <div class="quiz-list"></div>
+        <div class="quiz-page" style='display: none;'></div>
+
+        <div class="gameover-page" style='display: none;'>
+            <h3>All done!</h3>
+            <p>Your final score is <span id="final-score"></span></p>
+            <label for='initials-input'>Enter your initials: </label>
+            <input type="text" name='initials' id="initials-input">
+            <input class="btn" type="button" id="submit-btn" value="Submit">
+        </div>
         
-        
-        <div class='score-page'>
+        <div class='score-page' id="last-score" style="display: none;">
             <h3>Highscores</h3>
             <div id="highscore"><ol class="score-list"></ol></div>
             <button class="btn list-btn" id="back-btn">Back</button>

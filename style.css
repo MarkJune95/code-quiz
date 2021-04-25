@@ -7,16 +7,17 @@ body {
 }
 /* header styling */
 a{
+    cursor: pointer;
     text-decoration: none;
+    color:cornflowerblue;
 }
-#time{
+.time{
     float:right;
     margin-right: 30px;
     
 }
 /* homepage styling */
-
-.homepage-box{
+.homepage{
     text-align: center;
 
 }
@@ -26,8 +27,9 @@ a{
 }
 
 /* quiz page styling */
-.quiz-list,
-.score-page{
+.quiz-page,
+.score-page,
+.gameover-page{
     margin-top: 5%;
     margin-left: 35%;
     line-height: 16px;
@@ -68,11 +70,19 @@ li{
     font-family: cursive;
     color: grey;
 }
+.message{
+    color:cadetblue;
+    margin-left: 25px;
+    border-top: 2px solid gainsboro;
+    padding: 10px;
+    font-family: cursive;
+}
 
 
 @media only screen and (max-width: 600px) {
     .quiz-list,
-    .score-page{
+    .score-page,
+    .gameover-page{
         margin-right: 5px;
         font-size: 12px;
         margin-top: 5%;

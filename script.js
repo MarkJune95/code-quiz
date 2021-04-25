@@ -30,181 +30,275 @@ var quizArray = [
 
 ]
 
-//get HTML DOM input
-var homepage = document.querySelector(".homepage-box");
+//DOM for homepage and quiz-page
+var homepage = document.querySelector(".homepage");
 var startBtn = document.querySelector('#start-btn')
-var questionEl = document.querySelector('.quiz-list');
+var quizpageEl = document.querySelector('.quiz-page');
+//DOM for gameover-page
+var gameOverPageEl = document.querySelector('.gameover-page');
+var finalScoreEl = document.querySelector('#final-score')
+var initialsEl = document.querySelector('#initials-input')
+var submitBtn = document.querySelector('#submit-btn')
+//DOM for score page
 var scorePageEl = document.querySelector('.score-page')
 var scoreEl = document.querySelector('.score-list')
+var backBtn = document.querySelector('#back-btn')
+var clearBtn = document.querySelector('#clear-btn')
+
 var timerEl = document.querySelector('#time')
 
-
 var questionCounter = 0;
-var initialInput;
 var setTime;
-
-scorePageEl.style.display = "none"
-
 var secondsLeft = 100;
+
+//timer 
+timerEl.innerHTML = secondsLeft
 function timer() {
         setTime = setInterval(function() {
         secondsLeft--;
-        timerEl.innerHTML = `Time left: ${secondsLeft}`;
+        timerEl.innerHTML = secondsLeft
         if(secondsLeft === 0){
             clearInterval(setTime);
-            gameOver()
+            gameOver();
         }
 
     }, 1000);
   }
 
-
-
-//getQuestion function will generate questions
+  var currentQuestion;
+  
+//generate questions and choices
 function getQuestion(){
-    //clear the page
-    questionEl.innerHTML = '';
-    //set questions
-    var currentQuestion = quizArray[questionCounter]
-    //create question
+    quizpageEl.innerHTML = '';
+    currentQuestion = quizArray[questionCounter]
     var createQuestion = document.createElement("h3")
     createQuestion.innerHTML = currentQuestion.question;
-    questionEl.appendChild(createQuestion);
+    quizpageEl.appendChild(createQuestion);
     console.log(createQuestion)
     
-    // display answer choices
     var choiceLen = currentQuestion.choices.length;
     for(var i = 0; i < choiceLen; i++){
         var answerChoices = document.createElement("button");
-        answerChoices.className = 'choice-btn'
+        answerChoices.className = `choice-btn`
+        answerChoices.setAttribute('number', i)
         answerChoices.innerHTML = `${i+1}. ${currentQuestion.choices[i]}`;
-        questionEl.appendChild(answerChoices)
+        quizpageEl.appendChild(answerChoices)
         const lineBr = document.createElement("br");
-        questionEl.appendChild(lineBr)
+        quizpageEl.appendChild(lineBr)
     }
     
     questionCounter++;
-    
+    console.log(answerChoices)
 }
 
-
-//gameOver function will display a page for user to see final scores, and enter initials
+//game over page will display
 function gameOver(){
-    //clear the page
-    questionEl.innerHTML = '';
-    const title = document.createElement("h3")
-    title.innerHTML = "All done!"
-    questionEl.appendChild(title)
-
-    var showScore = document.createElement("p")
-    showScore.innerHTML = `Your final score is ${secondsLeft}`
-    questionEl.appendChild(showScore)
-    
-    var label = document.createElement("label")
-    label.innerHTML = "Enter your initials: "
-    questionEl.appendChild(label)
-
-    initialInput = document.createElement('input')
-    initialInput.setAttribute('type', 'text')
-    initialInput.id = 'initials'
-    questionEl.appendChild(initialInput)
-    
-    var submitBtn = document.createElement('input')
-    submitBtn.setAttribute('type', 'submit')
-    submitBtn.setAttribute('value', 'Submit')
-    submitBtn.className = 'btn'
-    submitBtn.id = 'submit-btn'
-    questionEl.appendChild(submitBtn)
+    hide(quizpageEl)
+    show(gameOverPageEl)
+    finalScoreEl.innerHTML = secondsLeft;
   
 }
+//create lists[], and add <li> to the array
+var lists = []
 function appendPerson(){
-
-    var highScore = {
-        person: initialInput.value,
-        score: secondsLeft
-    };
-    localStorage.setItem("highscore", JSON.stringify(highScore));
-    //create list to store initials and score
-    var li = document.createElement('li')
-    li.className ="list"
-    li.append(highScore.person) + li.append(" - ") + li.append(highScore.score)
-    scoreEl.appendChild(li)
-    console.log(li)
-}
-
-
-//click event for starting the quiz
-startBtn.addEventListener('click', function(event){
-event.preventDefault();
-timer()
-getQuestion(); 
-homepage.style.display = "none";
-   
-          
-});
-
-
-
-
-//click answer button 
-questionEl.onclick = function(event){
-    event.preventDefault();
-    var target = event.target;
-    if (target.className === 'choice-btn'){
-        if(questionCounter === quizArray.length){
-            clearInterval(setTime)
-            gameOver(); 
-   
-        }
-        else{
-            getQuestion();
-                
-        }
-            
-   }
-   //submit-button
-   if (target.id === 'submit-btn'){
-       questionEl.innerHTML = ''
-       appendPerson();
-       show(scorePageEl)
-       secondsLeft = 100;
-       timerEl.innerHTML = `Time left: ${secondsLeft}`;
-       questionCounter = 0;
-       
-}
-}
-//back-button and clear-button click event
-scorePageEl.onclick = function(event){
-    event.preventDefault();
-    target = event.target;
-    if(target.id === 'back-btn'){
-        
-        show(homepage)
-        hide(scorePageEl)
-        // scoreEl.style.display = "none"
-        questionEl.innerHTML = ''   
-        
-    }
-    if(target.id === 'clear-btn'){
-        scoreEl.innerHTML = ''
-        
-    }
-    
+    scoreEl.innerHTML = '';
+    timerEl.innerHTML = secondsLeft;
+    initialsEl.value = ''
+    for(var i = 0; i<lists.length; i++){
+        var list = lists[i]
+        var li = document.createElement('li')
+        li.innerHTML = list
+        li.setAttribute("number", i);
+        scoreEl.appendChild(li)      
+    }    
+    console.log(lists)
     
 }
-
+//set and get localStorage
+function savedScore(){
+    localStorage.setItem("lists", JSON.stringify(lists))
+}
+function pullScore(){
+    var storedList = JSON.parse(localStorage.getItem("lists"))
+    if(storedList !== null){
+        lists = storedList;
+    }
+    else{
+        lists = ["Nothing yet!"]
+    }
+    appendPerson()
+}
+// create show and hide function to easily hide page
 function show(page){
 
     if(page.style.display === "none"){
         page.style.display = "block";
     }
-    
-
 }
 function hide(page){
     if(page.style.display === "block"){
         page.style.display = "none";
     }
 }
+
+//click view highscores
+function viewHighscores(){
+    var viewHighscores = document.querySelector('#show-last-score')
+    viewHighscores.addEventListener('click', function(event){
+        event.preventDefault();
+        hide(homepage)
+        show(scorePageEl)
+        pullScore() 
+    })//end view
+    goBack()
+    clear()
+
+}
+
+
+//start-quiz button function
+function startQuiz(){    
+    startBtn.addEventListener('click', function(event){
+        event.preventDefault();
+        timer()
+        getQuestion();
+        hide(homepage); 
+        show(quizpageEl)
+        backBtn.style.display = 'none'
+        clearBtn.style.display = 'none'
+        
+        });
+
+}
+
+//to hide the right or wrong message after 2 sec
+function hideAfter(){
+    var sec = 2;
+    var fade = setInterval(function() {
+        sec--;
+        if(sec === 0){
+            clearInterval(fade);
+            message.remove()
+        }
+        console.log(sec)
+    }, 1000);
+    
+
+}
+//to create <p> to display right or wrong
+var message;
+//answer click function
+function chooseAnswer(){
+    
+    quizpageEl.onclick = function(event){
+        event.preventDefault();
+        var choice = event.target.getAttribute('number');
+        var correctAnswer = currentQuestion.answer 
+        var messageText;
+        message = document.createElement("p");
+        message.className = 'message'
+        
+        if (event.target.className === 'choice-btn'){
+                
+            if(questionCounter < quizArray.length){                
+                getQuestion();
+                hide(scorePageEl)
+                
+                if(choice == correctAnswer){
+                    messageText = 'Right'
+                    hideAfter()
+                            
+                }
+                else{
+                    secondsLeft -= 20
+                    messageText = 'Wrong!'
+                    hideAfter()
+                    
+                }
+                message.innerHTML = messageText;
+                quizpageEl.appendChild(message)
+                
+            }
+            else{
+                if(choice == correctAnswer){
+                    messageText = 'Right!'
+                    hideAfter()
+                            
+                }
+                else{
+                    secondsLeft -= 20
+                    messageText = 'Wrong!'
+                    hideAfter()
+                    
+                }
+                message.innerHTML = messageText;
+                gameOverPageEl.appendChild(message)
+
+                clearInterval(setTime)
+                hide(quizpageEl)
+                show(gameOverPageEl)
+                gameOver();
+                hide(scorePageEl)        
+            }
+
+       }
+    
+    
+       
+    }
+
+}
+
+//submit-button function
+function saveResult(){
+    submitBtn.addEventListener('click', function(event){
+    event.preventDefault();
+    var initialInput = initialsEl.value.trim();
+    lists.push(`${initialInput} - ${secondsLeft}`)
+    hide(gameOverPageEl)
+    appendPerson();
+    savedScore()
+    show(scorePageEl)
+    backBtn.style.display = 'inline'
+    clearBtn.style.display = 'inline'
+    //reset question
+    questionCounter = 0;
+    
+});
+}
+
+
+//back-button function
+function goBack(){  
+    backBtn.addEventListener('click', function(event){
+    event.preventDefault();
+    secondsLeft = 100;
+    timerEl.innerHTML = `${secondsLeft}`;
+    show(homepage)
+    hide(scorePageEl)
+    hide(quizpageEl)
+})
+}
+
+//clear highscore-button function
+function clear(){ 
+    clearBtn.addEventListener('click', function(event){
+    event.preventDefault();
+    scoreEl.innerHTML = '';
+    localStorage.clear();
+    lists = []
+})
+}
+
+//invoke the functions
+startQuiz()
+chooseAnswer()
+saveResult()
+viewHighscores()
+
+
+
+
+
 
 

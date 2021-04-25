@@ -39,9 +39,11 @@ a{
     width: max-content;
 }
 li{
+    margin: 2px;
     width: 400px;
     padding: 10px;
     background-color: aquamarine;
+    border-radius: 5px;
 }
 
 .choice-btn{

@@ -37,6 +37,7 @@ var questionEl = document.querySelector('.quiz-list');
 var scorePageEl = document.querySelector('.score-page')
 var scoreEl = document.querySelector('.score-list')
 var timerEl = document.querySelector('#time')
+var listBtnEl = document.querySelector('.score-page .list-btn')
 
 var questionCounter = 0;
 var initialInput;
@@ -138,9 +139,10 @@ function appendPerson(){
 //click event for starting the quiz
 startBtn.addEventListener('click', function(event){
 event.preventDefault();
-homepage.style.display = "none";
 timer()
-getQuestion();    
+getQuestion(); 
+homepage.style.display = "none";
+   
           
 });
 
@@ -166,9 +168,12 @@ questionEl.onclick = function(event){
    //submit-button
    if (target.id === 'submit-btn'){
        questionEl.innerHTML = ''
-       clearInterval(setTime)
        appendPerson();
-       show(scorePageEl)   
+       show(scorePageEl)
+       secondsLeft = 100;
+       timerEl.innerHTML = `Time left: ${secondsLeft}`;
+       questionCounter = 0;
+       
 }
 }
 //back-button and clear-button click event
@@ -176,7 +181,7 @@ scorePageEl.onclick = function(event){
     event.preventDefault();
     target = event.target;
     if(target.id === 'back-btn'){
-        questionCounter = 0;
+        
         show(homepage)
         hide(scorePageEl)
         // scoreEl.style.display = "none"
@@ -184,12 +189,15 @@ scorePageEl.onclick = function(event){
         
     }
     if(target.id === 'clear-btn'){
-        questionCounter = 0;
-        // scoreEl.style.display = "none"
+        scoreEl.innerHTML = ''
+        
     }
+    if(scoreEl.innerHTML == ""){
+        document.querySelector('#clear-btn').style.display = 'none'
+        document.querySelector('#back-btn').style.display = 'none'
+    }
+    
 }
-
-// startQuiz()
 
 function show(page){
 

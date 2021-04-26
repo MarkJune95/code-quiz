@@ -2,17 +2,26 @@
 body {
     margin: 0;
     font-size: 18px;
-    padding: 10px;
+    padding: 0;
+    background-color:aliceblue;
     
 }
+.header{
+    background-color:cornflowerblue;
+    padding: 20px;
+}
 nav{
+    color: white;
     padding: 12px;
 }
 /* header styling */
 a{
     cursor: pointer;
     text-decoration: none;
-    color:cornflowerblue;
+    color:cyan;
+}
+a:hover{
+    color: aliceblue;
 }
 .time{
     float:right;
@@ -22,12 +31,26 @@ a{
 }
 /* homepage styling */
 .homepage{
+    margin-left: 350px;
+    width: max-content;
+    padding: 50px;
+    border-radius: 10px;
+    background-color:aquamarine;
     text-align: center;
-
+    
 }
 .btn{
     cursor: pointer;
     margin: 2px;
+    padding: 5px;
+    border-radius: 10px;
+    font-weight: 600;
+    color:white;
+    background-color:cornflowerblue;
+}
+.btn:hover{
+    background-color:aqua;
+    color:blueviolet;
 }
 #start-btn{
     margin-right: 30px;
@@ -38,14 +61,17 @@ a{
 .quiz-page,
 .score-page,
 .gameover-page{
-    margin-top: 5%;
-    margin-left: 35%;
-    line-height: 16px;
-    width: max-content;
+    margin-top: 50px;
+    margin-left: 550px;
+    width: 600px;
+    padding: 50px;
+    border-radius: 5px;
+    background-color:aquamarine;
+    border-radius: 10px;
 }
-
 .score-list{
-    margin-top: 5%;
+    list-style: none;
+    margin: 5%;
     line-height: 16px;
     width: max-content;
 }
@@ -53,8 +79,10 @@ li{
     margin: 2px;
     width: 400px;
     padding: 10px;
-    background-color: aquamarine;
+    background-color:darkslateblue;
     border-radius: 5px;
+    color:white;
+    font-family:cursive;
 }
 
 .choice-btn{

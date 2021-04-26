@@ -101,17 +101,21 @@ function gameOver(){
 //create lists[], and add <li> to the array
 var lists = []
 
+
 function appendPerson(){
     scoreEl.innerHTML = '';
     initialsEl.value = ''
     for(var i = 0; i<lists.length; i++){
         var list = lists[i]
         var li = document.createElement('li')
-        li.innerHTML =`${list.initial}    ${list.score}`
-        li.setAttribute("number", i);
-       
+        li.innerHTML =`${i+1}. ${list.initial}    ${list.score}`
+        lists.sort(function(a, b){
+            return b.score - a.score;
+        })
+        // li.setAttribute("number", i); 
         scoreEl.appendChild(li)      
     }
+    
     localStorage.setItem("lists", JSON.stringify(lists))
 }
 //set and get localStorage
@@ -260,6 +264,7 @@ function submitResult(){
         initialsEl.value =''
         hide(gameOverPageEl)
         appendPerson();
+        pullScore()
         show(scorePageEl)
         backBtn.style.display = 'inline'
         clearBtn.style.display = 'inline'

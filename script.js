@@ -100,31 +100,29 @@ function gameOver(){
 }
 //create lists[], and add <li> to the array
 var lists = []
+
 function appendPerson(){
     scoreEl.innerHTML = '';
-    timerEl.innerHTML = secondsLeft;
     initialsEl.value = ''
     for(var i = 0; i<lists.length; i++){
         var list = lists[i]
         var li = document.createElement('li')
-        li.innerHTML = list
+        li.innerHTML =`${list.initial}    ${list.score}`
         li.setAttribute("number", i);
+       
         scoreEl.appendChild(li)      
-    }    
-    console.log(lists)
-    
-}
-//set and get localStorage
-function savedScore(){
+    }
     localStorage.setItem("lists", JSON.stringify(lists))
 }
+//set and get localStorage
 function pullScore(){
     var storedList = JSON.parse(localStorage.getItem("lists"))
     if(storedList !== null){
         lists = storedList;
+
     }
     else{
-        lists = ["Nothing yet!"]
+        return;
     }
     appendPerson()
 }
@@ -148,7 +146,7 @@ function viewHighscores(){
         event.preventDefault();
         hide(homepage)
         show(scorePageEl)
-        pullScore() 
+        pullScore()
     })//end view
     goBack()
     clear()
@@ -210,7 +208,7 @@ function chooseAnswer(){
                             
                 }
                 else{
-                    secondsLeft -= 20
+                    secondsLeft -= 10
                     messageText = 'Wrong!'
                     hideAfter()
                     
@@ -226,7 +224,7 @@ function chooseAnswer(){
                             
                 }
                 else{
-                    secondsLeft -= 20
+                    secondsLeft -= 10
                     messageText = 'Wrong!'
                     hideAfter()
                     
@@ -250,19 +248,31 @@ function chooseAnswer(){
 }
 
 //submit-button function
-function saveResult(){
+function submitResult(){
     submitBtn.addEventListener('click', function(event){
     event.preventDefault();
-    var initialInput = initialsEl.value.trim();
-    lists.push(`${initialInput} - ${secondsLeft}`)
-    hide(gameOverPageEl)
-    appendPerson();
-    savedScore()
-    show(scorePageEl)
-    backBtn.style.display = 'inline'
-    clearBtn.style.display = 'inline'
-    //reset question
-    questionCounter = 0;
+    var person = {
+        initial: initialsEl.value.trim(),
+        score: secondsLeft
+    }
+    if(person.initial !== ''){
+        lists.push(person)
+        initialsEl.value =''
+        hide(gameOverPageEl)
+        appendPerson();
+        show(scorePageEl)
+        backBtn.style.display = 'inline'
+        clearBtn.style.display = 'inline'
+        //reset question
+        questionCounter = 0;
+        secondsLeft = 100;
+        timerEl.innerHTML = `${secondsLeft}`;
+
+    }
+    else{
+        alert("Please enter initials: ")
+    }
+    
     
 });
 }
@@ -272,8 +282,6 @@ function saveResult(){
 function goBack(){  
     backBtn.addEventListener('click', function(event){
     event.preventDefault();
-    secondsLeft = 100;
-    timerEl.innerHTML = `${secondsLeft}`;
     show(homepage)
     hide(scorePageEl)
     hide(quizpageEl)
@@ -293,7 +301,7 @@ function clear(){
 //invoke the functions
 startQuiz()
 chooseAnswer()
-saveResult()
+submitResult()
 viewHighscores()
 
 

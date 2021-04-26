@@ -5,6 +5,9 @@ body {
     padding: 10px;
     
 }
+nav{
+    padding: 12px;
+}
 /* header styling */
 a{
     cursor: pointer;
@@ -14,6 +17,7 @@ a{
 .time{
     float:right;
     margin-right: 30px;
+    margin-top: 0px;
     
 }
 /* homepage styling */
@@ -25,6 +29,10 @@ a{
     cursor: pointer;
     margin: 2px;
 }
+#start-btn{
+    margin-right: 30px;
+    
+}
 
 /* quiz page styling */
 .quiz-page,
@@ -35,6 +43,7 @@ a{
     line-height: 16px;
     width: max-content;
 }
+
 .score-list{
     margin-top: 5%;
     line-height: 16px;

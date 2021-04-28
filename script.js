@@ -259,7 +259,12 @@ function submitResult(){
         initial: initialsEl.value.trim(),
         score: secondsLeft
     }
-    if(person.initial !== ''){
+    if(person.initial == ''){
+        alert("Please enter initials: ")
+
+    }
+    else{
+        
         lists.push(person)
         initialsEl.value =''
         hide(gameOverPageEl)
@@ -272,10 +277,6 @@ function submitResult(){
         questionCounter = 0;
         secondsLeft = 100;
         timerEl.innerHTML = `${secondsLeft}`;
-
-    }
-    else{
-        alert("Please enter initials: ")
     }
     
     

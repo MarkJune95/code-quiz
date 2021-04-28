@@ -3,5 +3,5 @@ This web application will allow user to take quiz. Quiz will be timed, and score
 ### Homepage of the application
 ![](images/homepage.PNG)
 ### Once user click the Start Quiz button
-Once user start the quiz, question will multiple choices will pop up, and the timer will start.
+Once user start the quiz, quesitons and multiple choices will pop up, and the timer will start.
 ![](images/startquiz.PNG)
